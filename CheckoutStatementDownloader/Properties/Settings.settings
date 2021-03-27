@@ -6,7 +6,7 @@
       <Value Profile="(Default)">pk_xxxxxxxxxxx</Value>
     </Setting>
     <Setting Name="downloadFolderLocation" Type="System.String" Scope="User">
-      <Value Profile="(Default)">/Downloads</Value>
+      <Value Profile="(Default)">Statements</Value>
     </Setting>
   </Settings>
 </SettingsFile>

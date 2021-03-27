@@ -37,7 +37,7 @@ namespace CheckoutStatementDownloader.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("/Downloads")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Statements")]
         public string downloadFolderLocation {
             get {
                 return ((string)(this["downloadFolderLocation"]));

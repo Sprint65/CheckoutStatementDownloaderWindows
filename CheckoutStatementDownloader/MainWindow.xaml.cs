@@ -28,6 +28,7 @@ namespace CheckoutStatementDownloader
             InitializeComponent();
             client.BaseAddress = new Uri(baseUrl);
             client.DefaultRequestHeaders.Accept.Clear();
+            Debug.WriteLine(Path.GetFullPath("./Something"));
         }
 
 
@@ -87,7 +88,7 @@ namespace CheckoutStatementDownloader
 
         private async Task SaveCsvFileToDisk(string id, string resultCSV)
         {
-                string folderPath = Properties.Settings.Default.downloadFolderLocation;
+                string folderPath = Path.GetFullPath(Properties.Settings.Default.downloadFolderLocation.ToString());
                 string fileName = id + ".csv";
                 string filePath = Path.Combine(folderPath, fileName);
 
@@ -141,7 +142,9 @@ namespace CheckoutStatementDownloader
 
         private void OpenSettingsPoppupWindow(object sender, RoutedEventArgs e)
         {
-            SettingsWindow settingsPoppupWindow = new SettingsWindow();
+            SettingsWindow settingsPoppupWindow = new SettingsWindow() { Owner = this };
+            //settingsPoppupWindow.Left = this.Left + this.Width / 2;
+            //settingsPoppupWindow.Top = this.Top + this.Height / 2;
             settingsPoppupWindow.Show();
         }
 

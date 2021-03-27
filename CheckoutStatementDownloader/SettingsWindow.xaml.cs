@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace CheckoutStatementDownloader
 {
@@ -17,6 +10,8 @@ namespace CheckoutStatementDownloader
     /// </summary>
     public partial class SettingsWindow : Window
     {
+        private FolderBrowserDialog folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+
         public SettingsWindow()
         {
             InitializeComponent();
@@ -38,6 +33,18 @@ namespace CheckoutStatementDownloader
             Properties.Settings.Default.apiKey = this.apiKeyInput.Text;
             Properties.Settings.Default.downloadFolderLocation = this.folderLocationInput.Text;
             this.Hide();
+        }
+
+        private void OpenFolderSelectionWindow(object sender, RoutedEventArgs e)
+        {
+            DialogResult selectedFolder = folderBrowserDialog.ShowDialog();
+
+            Debug.WriteLine(selectedFolder);
+
+            if (selectedFolder.ToString() == "OK")
+            {
+                this.folderLocationInput.Text = folderBrowserDialog.SelectedPath;
+            }
         }
     }
 }
