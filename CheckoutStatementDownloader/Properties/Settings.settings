@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="CheckoutStatementDownloader.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="apiKey" Type="System.String" Scope="User">
+      <Value Profile="(Default)">pk_xxxxxxxxxxx</Value>
+    </Setting>
+    <Setting Name="downloadFolderLocation" Type="System.String" Scope="User">
+      <Value Profile="(Default)">/Downloads</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
