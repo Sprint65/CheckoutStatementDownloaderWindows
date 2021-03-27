@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CheckoutStatementDownloader"
         mc:Ignorable="d" FontSize="18" FontFamily="Segoe UI" Foreground="#FFD4D4D4" 
-        Title="Checkout.com Statement Downloader" Height="450" Width="600" MinWidth="500" MinHeight="500" Loaded="Window_Loaded" WindowStyle="SingleBorderWindow" Icon="/ashqur.png" Background="White">
+        Title="Checkout.com Statement Downloader" Height="450" Width="600" MinWidth="500" MinHeight="500" Loaded="Window_Loaded">
     <Grid Background="#FF2E2E2E">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
@@ -29,9 +29,9 @@
         <DockPanel Grid.ColumnSpan="6" Grid.Row="0" Background="#FFF0F0F0">
             <Menu DockPanel.Dock="Top" VerticalAlignment="Top" HorizontalAlignment="Left">
                 <MenuItem Header="_File">
-                    <MenuItem Header="_Settings" Click="OpenSettingsPoppupWindow" />
-                    <MenuItem Header="_Exit" Click="CloseApplication"/>
-                 </MenuItem>
+                    <MenuItem Header="_Settings" />
+                    <MenuItem Header="_Exit" />
+                </MenuItem>
             </Menu>
             <TextBox AcceptsReturn="True" />
         </DockPanel>

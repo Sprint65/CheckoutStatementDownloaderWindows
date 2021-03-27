@@ -26,5 +26,18 @@ namespace CheckoutStatementDownloader
         {
             this.Hide();
         }
+
+        private void LoadUserSettings(object sender, RoutedEventArgs e)
+        {
+            this.apiKeyInput.Text = Properties.Settings.Default.apiKey;
+            this.folderLocationInput.Text = Properties.Settings.Default.downloadFolderLocation;
+        }
+
+        private void UpdateUserSettings(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.apiKey = this.apiKeyInput.Text;
+            Properties.Settings.Default.downloadFolderLocation = this.folderLocationInput.Text;
+            this.Hide();
+        }
     }
 }

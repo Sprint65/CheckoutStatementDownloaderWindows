@@ -19,10 +19,6 @@ namespace CheckoutStatementDownloader
     {
         static HttpClient client = new HttpClient();
         static string baseUrl = "https://api.checkout.com/";
-        // Replace with user set key * MUST BE REMOVED *
-        static string apiKey = "sk_e2099101-ffb1-49db-b240-37cd96508044";
-        // Set a variable to the Documents path.
-        static string folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Statements");
         // Example Statement ID: 210312B207657
 
 
@@ -30,32 +26,19 @@ namespace CheckoutStatementDownloader
         {
 
             InitializeComponent();
-
             client.BaseAddress = new Uri(baseUrl);
             client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue(apiKey);
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void GetSettings()
-        {
-            apiKey = Properties.Settings.Default.apiKey;
-            folderPath = Properties.Settings.Default.downloadFolderLocation;
-        }
 
         private async void enterButton_Click(object sender, RoutedEventArgs e)
         {
-            //MessageBox.Show(content);
             string statementId = this.statementIdText.Text;
 
             if (statementId.Length == 0)
             {
                 // If input is empty prompt user to enter ID
-                MessageBox.Show("Please enter a statement ID", "Error!");
+                MessageBox.Show("Please enter a statement ID", "Statement ID required!", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
             string statementData = await FetchStatementCSV(statementId);
@@ -63,7 +46,7 @@ namespace CheckoutStatementDownloader
             // If downloaded statement is null then tell user there was an error
             if (statementData == null)
             {
-                MessageBox.Show("Error downloading statement", "Error!");
+                MessageBox.Show("Please ensure your API Key is correct. This can be changed in the app settings by going to: File > Settings", "Error Downloading Statement!", MessageBoxButton.OK , MessageBoxImage.Error);
                 return;
             }
 
@@ -71,24 +54,18 @@ namespace CheckoutStatementDownloader
             if (CheckIfDownloadedCsvIsEmpty(statementData))
             {
                 Debug.WriteLine("File is empty");
-                MessageBox.Show("Please ensure you have entered the correct statement ID.", "Error!");
+                MessageBox.Show("Please ensure you have entered the correct statement ID.", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
             {
-                bool successfulDownload = await SaveCsvFileToDisk(statementId, statementData);
-
-                if(successfulDownload)
-                {
-                    MessageBox.Show("Statement downloaded to " + folderPath, "Success!");
-                    this.statementIdText.Text = "";
-                    Process.Start("explorer.exe", folderPath);
-                }
+                await SaveCsvFileToDisk(statementId, statementData);
             }
         }
 
         // Fetch statement using the Checkout.com API
         private async Task<string> FetchStatementCSV(String id)
         {
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue(Properties.Settings.Default.apiKey);
             string apiURL = $"reporting/statements/{id}/payments/download";
             HttpResponseMessage response = await client.GetAsync(apiURL);
             Debug.WriteLine("Response: ");
@@ -98,14 +75,19 @@ namespace CheckoutStatementDownloader
             {
                 String resultCSV = await response.Content.ReadAsStringAsync();
                 return resultCSV;
+            } 
+            else if (response.StatusCode.ToString() == "Unauthorized")
+            {
+                Debug.WriteLine("Authorisation Error!");
             }
-
+            Debug.WriteLine("Status Code:");
+            Debug.WriteLine(response.StatusCode);
             return null;
-              
         }
 
-        private async Task<bool> SaveCsvFileToDisk(string id, string resultCSV)
+        private async Task SaveCsvFileToDisk(string id, string resultCSV)
         {
+                string folderPath = Properties.Settings.Default.downloadFolderLocation;
                 string fileName = id + ".csv";
                 string filePath = Path.Combine(folderPath, fileName);
 
@@ -123,13 +105,15 @@ namespace CheckoutStatementDownloader
                         using (StreamWriter outputFile = new StreamWriter(filePath))
                         {
                             await outputFile.WriteAsync(resultCSV);
-                            return true;
+
+                            MessageBox.Show("Statement downloaded to " + Properties.Settings.Default.downloadFolderLocation, "Success!", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                            this.statementIdText.Text = "";
+                            Process.Start("explorer.exe", Properties.Settings.Default.downloadFolderLocation);
                         }
                     }
                     catch (Exception error)
                     {
-                        MessageBox.Show(error.ToString(), "Error!");
-                        return false;
+                        MessageBox.Show(error.ToString(), "Error saving file to folder!", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
         }
 
