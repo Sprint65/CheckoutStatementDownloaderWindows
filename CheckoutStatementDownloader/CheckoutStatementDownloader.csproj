@@ -6,14 +6,13 @@
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <StartupObject>CheckoutStatementDownloader.App</StartupObject>
+    <ApplicationIcon>ashqurlogo.ico</ApplicationIcon>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="ashqur.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
   </ItemGroup>
 
   <ItemGroup>

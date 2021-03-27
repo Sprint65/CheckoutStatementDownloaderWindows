@@ -19,8 +19,6 @@ namespace CheckoutStatementDownloader
     {
         static HttpClient client = new HttpClient();
         static string baseUrl = "https://api.checkout.com/";
-        // Example Statement ID: 210312B207657
-
 
         public MainWindow()
         {

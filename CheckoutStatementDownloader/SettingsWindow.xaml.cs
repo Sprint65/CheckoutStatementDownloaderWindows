@@ -32,6 +32,7 @@ namespace CheckoutStatementDownloader
         {
             Properties.Settings.Default.apiKey = this.apiKeyInput.Text;
             Properties.Settings.Default.downloadFolderLocation = this.folderLocationInput.Text;
+            Properties.Settings.Default.Save();
             this.Hide();
         }
 
