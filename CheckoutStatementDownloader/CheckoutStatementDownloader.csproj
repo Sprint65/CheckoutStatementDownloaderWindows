@@ -2,21 +2,40 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <StartupObject>CheckoutStatementDownloader.App</StartupObject>
     <ApplicationIcon>ashqurlogo.ico</ApplicationIcon>
-    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <AssemblyName>CheckoutStatementDownloader</AssemblyName>
+    <PackageId>CheckoutStatementDownloader</PackageId>
+    <PackageIcon>ashqur.png</PackageIcon>
+    <Authors>Ashir Qureshi</Authors>
+    <Product>Checkout Statement Downloader</Product>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="ashqur.png" />
+    <Compile Remove="AssemblyInfo.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="ashqur.png" />
+    <None Remove="ashqur.png" />
+    <None Remove="ashqurlogo.ico" />
+    <EmbeddedResource Include="ashqurlogo.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AssemblyInfo.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <None Include="..\..\..\..\Downloads\ashqur.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="..\..\..\..\Downloads\ashqurlogo.ico" />
   </ItemGroup>
 
   <ItemGroup>
